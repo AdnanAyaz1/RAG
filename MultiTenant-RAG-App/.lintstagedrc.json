@@ -1,0 +1,5 @@
+{
+  "backend/**/*.ts": ["eslint --fix", "prettier --write"],
+  "rag-service/**/*.py": ["ruff check --fix", "ruff format"],
+  "frontend/**/*.{ts,tsx,js,jsx}": ["eslint --fix", "prettier --write"]
+}

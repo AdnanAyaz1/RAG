@@ -1,0 +1,25 @@
+{
+  "name": "multi-tenant-rag-saas",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "docker-compose up -d",
+    "dev:backend": "cd backend && npm run start:dev",
+    "dev:rag": "cd rag-service && pip install -r requirements.txt && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload",
+    "dev:frontend": "cd frontend && npm run dev",
+    "install:all": "pnpm install",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "format": "pnpm -r format"
+  },
+  "devDependencies": {
+    "husky": "^9.0.0",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.3.0"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ]
+}
