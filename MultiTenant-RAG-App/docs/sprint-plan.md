@@ -335,8 +335,8 @@
 
 | Sprint | Week | Goal | Status |
 |--------|------|------|--------|
-| Sprint 0 | Week 0 | Dev environment, scaffolding, CI/CD | Pending |
-| Sprint 1 | Week 1 | Auth, Tenants, Users working end-to-end | Pending |
+| Sprint 0 | Week 0 | Dev environment, scaffolding, CI/CD | ✅ Complete |
+| Sprint 1 | Week 1 | Auth, Tenants, Users working end-to-end | ✅ Complete |
 | Sprint 2 | Week 2 | Document upload + RAG pipeline working end-to-end | Pending |
 | Sprint 3 | Week 3 | Complete frontend UI with all pages and admin | Pending |
 | Sprint 4 | Week 4 | Hardening, testing, security, production deployment | Pending |
