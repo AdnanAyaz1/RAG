@@ -3,10 +3,9 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../user/user.service';
 import { TenantService } from '../tenant/tenant.service';
-import { LoginDto, RegisterDto } from './dto';
+import { LoginDto, RegisterDto } from './dto/index';
 import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcrypt';
-import { passlib } from 'passlib';
 
 @Injectable()
 export class AuthService {
@@ -97,6 +96,14 @@ export class AuthService {
     } catch {
       throw new UnauthorizedException('Invalid refresh token');
     }
+  }
+
+  async logout(refreshToken: string) {
+    const user = await this.usersService.findByRefreshToken(refreshToken);
+    if (user) {
+      await this.usersService.clearRefreshToken(user.id);
+    }
+    return { message: 'Logged out' };
   }
 
   private async hashPassword(password: string): Promise<string> {
