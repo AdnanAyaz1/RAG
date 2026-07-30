@@ -9,6 +9,8 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
+  private resetTokens: Map<string, { userId: string; expiresAt: number }> = new Map();
+
   constructor(
     private readonly usersService: UsersService,
     private readonly tenantService: TenantService,
@@ -106,9 +108,36 @@ export class AuthService {
     return { message: 'Logged out' };
   }
 
+  async forgotPassword(email: string) {
+    const user = await this.usersService.findByEmail(email);
+    if (!user) {
+      return { message: 'If the email exists, a reset link has been sent' };
+    }
+    const token = uuid();
+    this.resetTokens.set(token, {
+      userId: user.id,
+      expiresAt: Date.now() + 3600000,
+    });
+    return { message: 'If the email exists, a reset link has been sent' };
+  }
+
+  async resetPassword(token: string, newPassword: string) {
+    const entry = this.resetTokens.get(token);
+    if (!entry || entry.expiresAt < Date.now()) {
+      throw new UnauthorizedException('Invalid or expired reset token');
+    }
+    const user = await this.usersService.findById(entry.userId);
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+    const hashedPassword = await this.hashPassword(newPassword);
+    await this.usersService.updatePassword(entry.userId, hashedPassword);
+    this.resetTokens.delete(token);
+    return { message: 'Password reset successfully' };
+  }
+
   private async hashPassword(password: string): Promise<string> {
-    const saltRounds = 12;
-    return bcrypt.hash(password, saltRounds);
+    return bcrypt.hash(password, 12);
   }
 
   private async validatePassword(password: string, hash: string): Promise<boolean> {

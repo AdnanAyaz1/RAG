@@ -3,6 +3,8 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { OnboardingController } from './onboarding.controller';
 import { OnboardingService } from './onboarding.service';
+import { ForgotPasswordController } from './forgot-password.controller';
+import { ResetPasswordController } from './reset-password.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
@@ -20,7 +22,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
     }),
   ],
-  controllers: [AuthController, OnboardingController],
+  controllers: [AuthController, OnboardingController, ForgotPasswordController, ResetPasswordController],
   providers: [AuthService, JwtStrategy, OnboardingService],
   exports: [AuthService, OnboardingService],
 })
