@@ -13,6 +13,9 @@ import { TenantModule } from './tenant/tenant.module';
 import { DocumentModule } from './document/document.module';
 import { SearchModule } from './search/search.module';
 import { UserModule } from './user/user.module';
+import { TenantScopingMiddleware } from './common/middleware/tenant-scoping.middleware';
+import { RequestLoggingMiddleware } from './common/middleware/request-logging.middleware';
+import { GlobalErrorFilter } from './common/filters/global-error.filter';
 
 @Module({
   imports: [
@@ -49,7 +52,7 @@ import { UserModule } from './user/user.module';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, GlobalErrorFilter],
 })
 export class AppModule {
   constructor() {}
