@@ -8,7 +8,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
+import { AuthRouteModule } from './auth/auth-route.module';
 import { TenantModule } from './tenant/tenant.module';
 import { DocumentModule } from './document/document.module';
 import { SearchModule } from './search/search.module';
@@ -42,7 +42,7 @@ import { UserModule } from './user/user.module';
         signOptions: { expiresIn: config.get('JWT_EXPIRATION', '15m') },
       }),
     }),
-    AuthModule,
+    AuthRouteModule,
     TenantModule,
     DocumentModule,
     SearchModule,
