@@ -7,6 +7,7 @@ import cors from 'cors';
 import { TenantScopingMiddleware } from './common/middleware/tenant-scoping.middleware';
 import { RequestLoggingMiddleware } from './common/middleware/request-logging.middleware';
 import { GlobalErrorFilter } from './common/filters/global-error.filter';
+import { setupSwagger } from './auth/swagger-setup';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,8 +22,9 @@ async function bootstrap() {
   app.useGlobalFilters(new GlobalErrorFilter());
   app.use(new RequestLoggingMiddleware().use.bind(new RequestLoggingMiddleware()));
   app.use(new TenantScopingMiddleware().use.bind(new TenantScopingMiddleware()));
+  setupSwagger(app);
 
   await app.listen(config.get('PORT', 3000));
 }
 
-bootstrap();
+bootstrap();}
